@@ -16,6 +16,7 @@ public class TC008 extends BaseTest {
 	
 	@DataProvider
 	public String[][] getData() {
+		inta a=90;
 		return GenericXLLIbrary.getMultipleData(XL_PATH, "TC003");
 	}
 	

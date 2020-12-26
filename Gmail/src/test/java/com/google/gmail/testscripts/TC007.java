@@ -30,7 +30,7 @@ public class TC007 extends BaseTest {
 												 String size,
 												 String colorName) {
 		productId = Utillity.split(productId);
-		int inQ=Integer.parseInt(Utillity.split(increaseQuantity));
+		int increaseQuantity2=Integer.parseInt(Utillity.split(increaseQuantity));
 		int dcQ=Integer.parseInt(Utillity.split(decreaseQuantity));
 		
 		
@@ -38,7 +38,7 @@ public class TC007 extends BaseTest {
 		ProductsListPage prodListPage = hp.clickOnMenu(menuName);
 		ProductDetailsPage pdp = prodListPage.selectProduct(productId);
 
-		OrderDetailPage odp = pdp.addSelectedItemToKart(inQ, dcQ, size, colorName);
+		OrderDetailPage odp = pdp.addSelectedItemToKart(increaseQuantity2, dcQ, size, colorName);
 		Assert.assertEquals(odp.isProductDisplayed(productId),true);
 	}
 }

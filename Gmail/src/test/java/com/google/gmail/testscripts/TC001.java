@@ -27,7 +27,7 @@ public class TC001 extends BaseTest {
 		int deQ=Integer.parseInt(Utillity.split(decreaseQuantity));
 		String size = GenericXLLIbrary.getData(XL_PATH, sheetName, 1, 4);
 		String color = GenericXLLIbrary.getData(XL_PATH, sheetName, 1, 5);
-		
+		Assert.fail();
 		ProductsListPage productListPage = hp.clickOnMenu(menuName);
 		ProductDetailsPage pdp = productListPage.selectProduct(productId);
 		OrderDetailPage odp = pdp.addSelectedItemToKart(inQ, deQ, size, color);

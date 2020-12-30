@@ -11,11 +11,15 @@ import org.testng.ITestResult;
 import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
+import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Optional;
 import org.testng.annotations.Parameters;
 
+import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import com.google.gmail.generic.AutoConstants;
 import com.google.gmail.generic.ToTakeScreenShot;
 import com.google.gmail.generic.WebActionUtil;
@@ -23,8 +27,20 @@ import com.google.gmail.pom.HomePage;
 import com.google.gmail.pom.LoginPage;
 
 public class BaseTest implements AutoConstants {
-	WebDriver driver;
-	WebActionUtil webActionUtil;
+	public WebDriver driver;
+	public WebActionUtil webActionUtil;
+	
+	public static final ExtentReports extentReports = new ExtentReports();
+	
+	@BeforeSuite
+	public void createReporting() {
+		String sysPath = System.getProperty("user.dir");
+		ExtentSparkReporter sparkReporter= new ExtentSparkReporter(sysPath+EXTENT_FILE_PATH);
+		extentReports.attachReporter(sparkReporter);
+	}
+	
+	
+	
 	@Parameters({"browserName","appURL","ito","eto"})
 	@BeforeClass
 	public void openApp(@Optional(DEFAULT_BROWSER)String browserName,
@@ -81,5 +97,8 @@ public class BaseTest implements AutoConstants {
 		driver.quit();
 	}
 	
-	
+	@AfterSuite
+	public void closeReoporter() {
+		extentReports.flush();
+	}
 }

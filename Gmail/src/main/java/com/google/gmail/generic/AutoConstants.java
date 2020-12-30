@@ -17,5 +17,6 @@ public interface AutoConstants {
 	
 	String XL_PATH="./testdata/testdata.xlsx";
 	String PROP_PATH="./testdata/config.properties";
-	String IMAGE_PATH="./errorShots/";
+	String IMAGE_PATH="/errorShots/";
+	String EXTENT_FILE_PATH="/extentReports/reports.html";
 }

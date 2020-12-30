@@ -3,6 +3,8 @@ package com.google.gmail.testscripts;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.Status;
 import com.google.gmail.generic.GenericXLLIbrary;
 import com.google.gmail.generic.Utillity;
 import com.google.gmail.pom.HomePage;
@@ -14,7 +16,14 @@ import com.google.gmail.pom.ProductsListPage;
 public class TC002 extends BaseTest {
 	@Test(description="Test case to verify if the deleted product is not displayed in ODP page")
 	public void testToDeletAddedProductFromODP() {
-		HomePage hp = new HomePage(driver,webActionUtil);		
+		
+		String path="";
+		String tcName="TC002";
+		ExtentTest test = extentReports.createTest(tcName);
+		HomePage hp = new HomePage(driver,webActionUtil);
+		test.log(Status.PASS, "Home Page Displayed");
+		Utillity.addPicToER(test, driver, tcName, path);
+
 		//Getting testdata from XL
 		String sheetName = "TC002";
 		String menuName = GenericXLLIbrary.getData(XL_PATH, sheetName, 1, 0);
@@ -26,12 +35,32 @@ public class TC002 extends BaseTest {
 		int deQ=Integer.parseInt(Utillity.split(decreaseQuantity));
 		String size = GenericXLLIbrary.getData(XL_PATH, sheetName, 1, 4);
 		String color = GenericXLLIbrary.getData(XL_PATH, sheetName, 1, 5);		
+		
+		
+		
 		ProductsListPage productListPage = hp.clickOnMenu(menuName);
+		test.log(Status.PASS, "Clicked on "+menuName);
+		Utillity.addPicToER(test, driver, tcName, path);
+		
 		ProductDetailsPage pdp = productListPage.selectProduct(productId);
+		test.log(Status.PASS, "Clicked on Product with PID "+productId);
+		Utillity.addPicToER(test, driver, tcName, path);
+		
 		OrderDetailPage odp = pdp.addSelectedItemToKart(inQ, deQ, size, color);
-		Assert.assertEquals(odp.isProductDisplayed(productId), true);		
+		test.log(Status.PASS, "Added Items to Cart");
+		Utillity.addPicToER(test, driver, tcName, path);
+		
+		Assert.assertEquals(odp.isProductDisplayed(productId), true);	
+		test.log(Status.PASS, "Product is displayed in ODP");
+		Utillity.addPicToER(test, driver, tcName, path);
+		
 		odp.deleteProduct(productId);
+		test.log(Status.PASS, "Deleted Product");
+		Utillity.addPicToER(test, driver, tcName, path);
+		
 		Utillity.sleepInSeconds(5);
 		Assert.assertEquals(odp.isProductDisplayed(productId), false);
+		test.log(Status.PASS, "Prodcuct is not Displayed");
+		Utillity.addPicToER(test, driver, tcName, path);
 	}
 }
